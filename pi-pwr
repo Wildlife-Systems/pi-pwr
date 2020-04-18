@@ -93,6 +93,6 @@ do
 			esac
 			;;
 		*)
-			echo $"Usage: $0 {on|off} {usb|wifi|bluetooth|hdmi|pwrled|actled}"
+			echo $"Usage: pi-pwr {on|off} {usb|wifi|bluetooth|hdmi|pwrled|actled}"
 	esac
 done
