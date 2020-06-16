@@ -3,11 +3,11 @@
 This script allows for various functions of a Raspberry Pi to be turned off to reduce overall power consumption.
 
 ## Usage
-`aao-pwr <on|off>  <usb|wifi|bluetooth|hdmi|pwrled|actled>...`
+`pi-pwr <on|off>  <usb|wifi|bluetooth|hdmi|pwrled|actled>...`
 
 e.g.
 
-`aao-pwr off pwrled actled`
+`pi-pwr off pwrled actled`
 
 ## Compatability
 The following board revisions have been tested.
@@ -18,3 +18,4 @@ The following board revisions have been tested.
 |Raspberry Pi Model B+|0013||
 |Raspberry Pi 3 Model B|a02082||
 |Raspberry Pi Zero W|9000c1||
+|Raspberry Pi 4 Model B 4GB|c03111||
