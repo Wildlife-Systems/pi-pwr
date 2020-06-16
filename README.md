@@ -1,4 +1,4 @@
-# aao-pwr: Power management script for Raspberry Pi
+# pi-pwr: Power management script for Raspberry Pi
 
 This script allows for various functions of a Raspberry Pi to be turned off to reduce overall power consumption.
 
