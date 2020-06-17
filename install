@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wget https://github.com/audioblast/pi-pwr/raw/master/pi-pwr
+wget https://github.com/wildlife-systems/pi-pwr/raw/master/pi-pwr
 chown root:root pi-pwr
 chmod +x pi-pwr
 mv pi-pwr /usr/bin
