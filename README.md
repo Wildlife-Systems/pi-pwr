@@ -2,6 +2,9 @@
 
 This script allows for various functions of a Raspberry Pi to be turned off to reduce overall power consumption.
 
+## Installing this package
+`wget -O - https://github.com/audioblast/pi-pwr/raw/master/install | sudo bash`
+
 ## Usage
 `pi-pwr <on|off>  <usb|wifi|bluetooth|hdmi|pwrled|actled>...`
 
@@ -19,3 +22,7 @@ The following board revisions have been tested.
 |Raspberry Pi 3 Model B|a02082||
 |Raspberry Pi Zero W|9000c1||
 |Raspberry Pi 4 Model B 4GB|c03111||
+
+## Development
+* Development of this script was done as part of the Levehulme Trust funded Automated Acoustic Observatories project at the University of York.
+* Support for further devices was added as part of the Urban Nature Project at the Natural History Museum, London.
