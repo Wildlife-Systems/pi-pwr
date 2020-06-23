@@ -7,8 +7,10 @@ case "$1" in
 		;;
 	on)
 		;;
+	default)
+		;;
 	*)
-		echo $"Usage: $0 {on|off} {usb|wifi|bluetooth|hdmi|pwrled|actled}"
+		echo $"Usage: $0 {on|off|default} {usb|wifi|bluetooth|hdmi|pwrled|actled}"
 		exit 1
 esac
 
