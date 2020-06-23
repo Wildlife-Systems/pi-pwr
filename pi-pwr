@@ -67,6 +67,9 @@ do
 							echo gpio | sudo tee /sys/class/leds/led1/trigger
 							echo 0 | sudo tee /sys/class/leds/led1/brightness
 							;;
+						default)
+							echo input | sudo tee /sys/class/leds/led1/trigger
+							;;
 						on)
 							echo input | sudo tee /sys/class/leds/led1/trigger
 							;;
@@ -87,8 +90,20 @@ do
 							;;
 					esac
 					;;
+				default)
+					echo mmc0 | sudo tee /sys/class/leds/led0/trigger
+					;;
 				on)
 					echo mmc0 | sudo tee /sys/class/leds/led0/trigger
+					echo gpio | sudo tee /sys/class/leds/led0/trigger
+					case "$MODEL" in
+						9000c1)
+							echo 0 | sudo tee /sys/class/leds/led0/brightness
+							;;
+						*)
+							echo 1 | sudo tee /sys/class/leds/led0/brightness
+							;;
+					esac
 					;;
 			esac
 			;;
