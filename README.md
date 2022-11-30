@@ -20,7 +20,7 @@ The following board revisions have been tested.
 |Raspberry Pi Model B Rev 2|000d<br>000e|Power LED cannot be software controlled.|
 |Raspberry Pi Model B+|0013||
 |Raspberry Pi 3 Model B|a02082||
-|Raspberry Pi 3 Model B+||
+|Raspberry Pi 3 Model B+|a020d3|
 |Raspberry Pi Zero W|9000c1||
 |Raspberry Pi 4 Model B 4GB|c03111||
 
