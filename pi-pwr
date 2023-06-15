@@ -1,13 +1,23 @@
 #!/bin/bash
 
-MODEL=$(cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}' | sed 's/^ *//g' | sed 's/ *$//g')
+# Bash script that provides a command-line interface for controlling various power-related features of a Raspberry Pi. 
+# The script takes two arguments: the first argument specifies whether to turn the feature on or off, and the second 
+# argument specifies which feature to control.
+#
+# - `usb`: controls the USB ports on the Raspberry Pi.
+# - `wifi`: controls the Wi-Fi adapter on the Raspberry Pi.
+# - `bluetooth`: controls the Bluetooth adapter on the Raspberry Pi.
+# - `hdmi`: controls the HDMI output on the Raspberry Pi.
+# - `pwrled`: controls the power LED on the Raspberry Pi.
+# - `actled`: controls the activity LED on the Raspberry Pi.
+
+# Retrieve the model code of the Raspberry Pi.
+MODEL=$(grep 'Revision' /proc/cpuinfo | awk '{print $3}' | tr -d '[:space:]')
 
 case "$1" in
 	off)
 		;;
 	on)
-		;;
-	default)
 		;;
 	*)
 		echo $"Usage: $0 {on|off|default} {usb|wifi|bluetooth|hdmi|pwrled|actled}"
