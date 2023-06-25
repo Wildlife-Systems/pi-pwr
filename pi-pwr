@@ -17,6 +17,15 @@
 # - `pwrled`: controls the power LED on the Raspberry Pi.
 # - `actled`: controls the activity LED on the Raspberry Pi.
 
+# Return codes
+#
+# Further information on WildlifeSystems standard reurn codes can be found
+# at https://docs.wildlife.systems/return-codes.html
+# 0 - Success
+# 2 - no arguments provided
+# 50 - dissallowed value (should be on or off)
+# 51 - dissallowed value (should be on, off, or default)
+
 # Retrieve the model code of the Raspberry Pi.
 MODEL=$(grep 'Revision' /proc/cpuinfo | awk '{print $3}' | tr -d '[:space:]')
 
@@ -29,7 +38,7 @@ case "$1" in
 		;;
 	*)
 		echo $"Usage: $0 {on|off|default} {usb|wifi|bluetooth|hdmi|pwrled|actled}"
-		exit 1
+		exit 2
 esac
 
 for i in "${@:2}"
@@ -44,7 +53,7 @@ do
 					echo '1-1' | sudo tee /sys/bus/usb/drivers/usb/bind
 					;;
 				*)
-					exit 1
+					exit 50
 			esac
 			;;
 		wifi)
@@ -55,6 +64,8 @@ do
 				on)
 					rfkill unblock wifi
 					;;
+				*)
+					exit 50
 			esac
 			;;
 		bluetooth)
@@ -65,6 +76,8 @@ do
 				on)
 					rfkill unblock bluetooth
 					;;
+				*)
+					exit 50
 			esac
 			;;
 		hdmi)
@@ -75,6 +88,8 @@ do
 				on)
 					/usr/bin/tvservice -p
 					;;
+				*)
+					exit 50
 			esac
 			;;
 		pwrled)
@@ -95,6 +110,8 @@ do
 							echo gpio | sudo tee /sys/class/leds/led1/trigger >> /dev/null
 							echo 1 | sudo tee /sys/class/leds/led1/brightness >> /dev/null
 							;;
+						*)
+							exit 51
 					esac
 					;;
 			esac
@@ -127,9 +144,12 @@ do
 							;;
 					esac
 					;;
+				*)
+					exit 51
 			esac
 			;;
 		*)
 			echo $"Usage: pi-pwr {on|off} {usb|wifi|bluetooth|hdmi|pwrled|actled}"
+			exit 2
 	esac
 done
