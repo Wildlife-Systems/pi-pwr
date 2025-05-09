@@ -3,14 +3,20 @@
 This script allows for various functions of a Raspberry Pi to be turned off to reduce overall power consumption.
 
 ## Installing this package
-`wget -O - https://github.com/wildlife-systems/pi-pwr/raw/master/install | sudo bash`
+```
+wget https://github.com/Wildlife-Systems/pi-pwr/releases/download/1.0.0/pi-pwr_1.0.0_all.deb
+sudo dpkg -i pi-pwr_1.0.0_all.deb
+```
 
 ## Usage
-`pi-pwr <on|off>  <usb|wifi|bluetooth|hdmi|pwrled|actled>...`
-
+```
+pi-pwr <on|off>  <usb|wifi|bluetooth|hdmi|pwrled|actled>...
+```
 e.g.
 
-`pi-pwr off pwrled actled`
+```
+pi-pwr off pwrled actled
+```
 
 ## Compatability
 The following board revisions have been tested.
