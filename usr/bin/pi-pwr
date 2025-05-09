@@ -99,16 +99,40 @@ do
 				*)
 					case "$1" in
 						off)
-							echo gpio | sudo tee /sys/class/leds/led1/trigger >> /dev/null
-							echo 0 | sudo tee /sys/class/leds/led1/brightness >> /dev/null
+							# Check if path exists before trying to write to it
+							if [ -e /sys/class/leds/led1/trigger ]; then
+								echo gpio | sudo tee /sys/class/leds/led1/trigger >> /dev/null
+								echo 0 | sudo tee /sys/class/leds/led1/brightness >> /dev/null
+							else 
+								if [ -e /sys/class/leds/PWR/trigger ]; then
+									echo gpio | sudo tee /sys/class/leds/PWR/trigger >> /dev/null
+									echo 0 | sudo tee /sys/class/leds/PWR/brightness >> /dev/null
+								fi
+							fi
 							;;
 						default)
-							echo input | sudo tee /sys/class/leds/led1/trigger >> /dev/null
-							echo 0 | sudo tee /sys/class/leds/led1/brightness >> /dev/null
+							# Check if path exists before trying to write to it
+							if [ -e /sys/class/leds/led1/trigger ]; then
+								echo input | sudo tee /sys/class/leds/led1/trigger >> /dev/null
+								echo 0 | sudo tee /sys/class/leds/led1/brightness >> /dev/null
+							else 
+								if [ -e /sys/class/leds/PWR/trigger ]; then
+									echo input | sudo tee /sys/class/leds/PWR/trigger >> /dev/null
+									echo 0 | sudo tee /sys/class/leds/PWR/brightness >> /dev/null
+								fi
+							fi
 							;;
 						on)
-							echo gpio | sudo tee /sys/class/leds/led1/trigger >> /dev/null
-							echo 1 | sudo tee /sys/class/leds/led1/brightness >> /dev/null
+							# Check if path exists before trying to write to it
+							if [ -e /sys/class/leds/led1/trigger ]; then
+								echo gpio | sudo tee /sys/class/leds/led1/trigger >> /dev/null
+								echo 1 | sudo tee /sys/class/leds/led1/brightness >> /dev/null
+							else 
+								if [ -e /sys/class/leds/PWR/trigger ]; then
+									echo gpio | sudo tee /sys/class/leds/PWR/trigger >> /dev/null
+									echo 1 | sudo tee /sys/class/leds/PWR/brightness >> /dev/null
+								fi
+							fi
 							;;
 						*)
 							exit 51
@@ -119,30 +143,69 @@ do
 		actled)
 			case "$1" in
 				off)
-					echo gpio | sudo tee /sys/class/leds/led0/trigger >> /dev/null
-					case "$MODEL" in
+					# Check if path exists before trying to write to it
+					if [ -e /sys/class/leds/led0/trigger ]; then
+						echo gpio | sudo tee /sys/class/leds/led0/trigger >> /dev/null
+						case "$MODEL" in
 						9000c1)
-							echo 1 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
-							;;
-						*)
-							echo 0 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
-							;;
-					esac
+								echo 1 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
+								;;
+							*)
+								echo 0 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
+								;;
+							
+						esac
+					else 
+						if [ -e /sys/class/leds/ACT/trigger ]; then
+							#echo gpio | sudo tee /sys/class/leds/ACT/trigger >> /dev/null
+							case "$MODEL" in
+							9000c1)
+									echo 1 | sudo tee /sys/class/leds/ACT/brightness >> /dev/null
+									;;
+								*)
+									echo 0 | sudo tee /sys/class/leds/ACT/brightness >> /dev/null
+									;;
+							esac
+						fi
+					fi
+					
 					;;
 				default)
-					echo mmc0 | sudo tee /sys/class/leds/led0/trigger >> /dev/null
+					# Check if path exists before trying to write to it
+					if [ -e /sys/class/leds/led0/trigger ]; then
+						echo mmc0 | sudo tee /sys/class/leds/led0/trigger >> /dev/null
+						else 
+							if [ -e /sys/class/leds/ACT/trigger ]; then
+								echo mmc0 | sudo tee /sys/class/leds/ACT/trigger >> /dev/null
+							fi
+					fi
 					;;
 				on)
-					echo mmc0 | sudo tee /sys/class/leds/led0/trigger >> /dev/null
-					echo gpio | sudo tee /sys/class/leds/led0/trigger >> /dev/null
-					case "$MODEL" in
-						9000c1)
-							echo 0 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
-							;;
-						*)
-							echo 1 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
-							;;
-					esac
+					# Check if path exists before trying to write to it
+					if [ -e /sys/class/leds/led0/trigger ]; then
+						echo gpio | sudo tee /sys/class/leds/led0/trigger >> /dev/null
+						case "$MODEL" in
+							9000c1)
+								echo 0 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
+								;;
+							*)
+								echo 1 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
+								;;
+							
+						esac
+						else 
+							if [ -e /sys/class/leds/ACT/trigger ]; then
+								case "$MODEL" in
+								9000c1)
+									echo 0 | sudo tee /sys/class/leds/ACT/brightness >> /dev/null
+									;;
+								*)
+									echo 1 | sudo tee /sys/class/leds/ACT/brightness >> /dev/null
+									;;
+							
+								esac
+							fi
+					fi
 					;;
 				*)
 					exit 51
