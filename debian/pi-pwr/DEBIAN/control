@@ -1,8 +1,9 @@
 Package: pi-pwr
 Version: 1.0.0
-Section: utils
-Priority: optional
 Architecture: all
 Maintainer: Ed Baker <ed@ebaker.me.uk>
+Installed-Size: 14
+Section: utils
+Priority: optional
 Description: Raspberry Pi power manager
   This package allows for managing the power state of a Raspberry Pi.

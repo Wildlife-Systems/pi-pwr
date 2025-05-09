@@ -1,0 +1,155 @@
+#!/bin/bash
+
+# WildlifeSystems
+#
+# This script is part of the WildlifeSystems project. For further information
+# please refer to https://docs.wildlife.systems, or for more information on
+# the project itself, please refer to https://wildlife.systems.
+
+# Bash script that provides a command-line interface for controlling various power-related features of a Raspberry Pi. 
+# The script takes two arguments: the first argument specifies whether to turn the feature on or off, or to restore the
+# default value. The second argument specifies which feature to control.
+#
+# - `usb`: controls the USB ports on the Raspberry Pi.
+# - `wifi`: controls the Wi-Fi adapter on the Raspberry Pi.
+# - `bluetooth`: controls the Bluetooth adapter on the Raspberry Pi.
+# - `hdmi`: controls the HDMI output on the Raspberry Pi.
+# - `pwrled`: controls the power LED on the Raspberry Pi.
+# - `actled`: controls the activity LED on the Raspberry Pi.
+
+# Return codes
+#
+# Further information on WildlifeSystems standard reurn codes can be found
+# at https://docs.wildlife.systems/return-codes.html
+# 0 - Success
+# 2 - no arguments provided
+# 50 - dissallowed value (should be on or off)
+# 51 - dissallowed value (should be on, off, or default)
+
+# Retrieve the model code of the Raspberry Pi.
+MODEL=$(grep 'Revision' /proc/cpuinfo | awk '{print $3}' | tr -d '[:space:]')
+
+case "$1" in
+	off)
+		;;
+	on)
+		;;
+	default)
+		;;
+	*)
+		echo $"Usage: $0 {on|off|default} {usb|wifi|bluetooth|hdmi|pwrled|actled}"
+		exit 2
+esac
+
+for i in "${@:2}"
+do
+	case "$i" in
+		usb)
+			case "$1" in
+				off)
+					echo '1-1' | sudo tee /sys/bus/usb/drivers/usb/unbind
+					;;
+				on)
+					echo '1-1' | sudo tee /sys/bus/usb/drivers/usb/bind
+					;;
+				*)
+					exit 50
+			esac
+			;;
+		wifi)
+			case "$1" in
+				off)
+					rfkill block wifi
+					;;
+				on)
+					rfkill unblock wifi
+					;;
+				*)
+					exit 50
+			esac
+			;;
+		bluetooth)
+			case "$1" in
+				off)
+					rfkill block bluetooth
+					;;
+				on)
+					rfkill unblock bluetooth
+					;;
+				*)
+					exit 50
+			esac
+			;;
+		hdmi)
+			case "$1" in
+				off)
+					/usr/bin/tvservice -o
+					;;
+				on)
+					/usr/bin/tvservice -p
+					;;
+				*)
+					exit 50
+			esac
+			;;
+		pwrled)
+			case "$MODEL" in
+				000d|9000c1)
+					;;
+				*)
+					case "$1" in
+						off)
+							echo gpio | sudo tee /sys/class/leds/led1/trigger >> /dev/null
+							echo 0 | sudo tee /sys/class/leds/led1/brightness >> /dev/null
+							;;
+						default)
+							echo input | sudo tee /sys/class/leds/led1/trigger >> /dev/null
+							echo 0 | sudo tee /sys/class/leds/led1/brightness >> /dev/null
+							;;
+						on)
+							echo gpio | sudo tee /sys/class/leds/led1/trigger >> /dev/null
+							echo 1 | sudo tee /sys/class/leds/led1/brightness >> /dev/null
+							;;
+						*)
+							exit 51
+					esac
+					;;
+			esac
+			;;
+		actled)
+			case "$1" in
+				off)
+					echo gpio | sudo tee /sys/class/leds/led0/trigger >> /dev/null
+					case "$MODEL" in
+						9000c1)
+							echo 1 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
+							;;
+						*)
+							echo 0 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
+							;;
+					esac
+					;;
+				default)
+					echo mmc0 | sudo tee /sys/class/leds/led0/trigger >> /dev/null
+					;;
+				on)
+					echo mmc0 | sudo tee /sys/class/leds/led0/trigger >> /dev/null
+					echo gpio | sudo tee /sys/class/leds/led0/trigger >> /dev/null
+					case "$MODEL" in
+						9000c1)
+							echo 0 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
+							;;
+						*)
+							echo 1 | sudo tee /sys/class/leds/led0/brightness >> /dev/null
+							;;
+					esac
+					;;
+				*)
+					exit 51
+			esac
+			;;
+		*)
+			echo $"Usage: pi-pwr {on|off} {usb|wifi|bluetooth|hdmi|pwrled|actled}"
+			exit 2
+	esac
+done

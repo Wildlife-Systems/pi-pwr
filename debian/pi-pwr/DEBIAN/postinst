@@ -1,0 +1,5 @@
+#!/bin/bash
+
+chmod +x /usr/bin/pi-pwr
+
+exit 0
