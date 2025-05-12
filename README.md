@@ -1,12 +1,17 @@
 # pi-pwr: Power management script for Raspberry Pi
 
 This script allows for various functions of a Raspberry Pi to be turned off to reduce overall power consumption.
+## Installing the software
 
-## Installing this package
+[Add the WildlifeSytems APT repository to your system](https://wildlife.systems/apt-configuration.html)
+
+Install pi-pwr.
+
 ```
-wget https://github.com/Wildlife-Systems/pi-pwr/releases/download/1.0.0/pi-pwr_1.0.0_all.deb
-sudo dpkg -i pi-pwr_1.0.0_all.deb
+sudo apt update
+sudo apt install pi-pwr
 ```
+
 
 ## Usage
 ```
